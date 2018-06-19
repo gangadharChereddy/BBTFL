@@ -1,3 +1,4 @@
+import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { GooglePlus } from '@ionic-native/google-plus';
@@ -26,7 +27,11 @@ export class LoginPage {
     }).then(res => {
       firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
       .then(success =>{
-          alert("login success"+firebase.auth().currentUser);
+          alert("login success"+firebase.auth().currentUser.displayName+firebase.auth().currentUser.photoURL);
+          this.navCtrl.setRoot(HomePage,{
+            'name':firebase.auth().currentUser.displayName,
+            'photoUrl':firebase.auth().currentUser.photoURL
+          });
           alert("success"+success);
       }).catch(err => {
         alert("login unsuccessful"+err)
